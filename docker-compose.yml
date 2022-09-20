@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+    web:
+        container_name: "drf"
+        build: .
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./app/:/usr/src/app/
+        ports:
+        - 8000:8000
+        depends_on:
+        - db
+    db:
+        container_name: "psql"
+        image: postgres
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        ports:
+        - "6666:5432"
+        environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=admin
+        - POSTGRES_DB=post
+volumes:
+    postgres_data:
