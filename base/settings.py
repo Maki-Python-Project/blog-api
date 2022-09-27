@@ -70,8 +70,8 @@ WSGI_APPLICATION = "base.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('ENGINE_DB', 'django.db.backends.postgresql_psycopg2'),
-        'HOST': os.getenv('HOST_DB', 'host.docker.internal'),
-        'PORT': int(os.getenv('PORT_DB', 6666)),
+        'HOST': os.getenv('HOST_DB', 'localhost'),
+        'PORT': int(os.getenv('PORT_DB', 5432)),
         'USER':  os.getenv('USER_BD', 'postgres'),
         'PASSWORD': os.getenv('PASSWORD_BD', 'admin'),
         'NAME': os.getenv('NAME_DB', 'post'),
