@@ -8,6 +8,11 @@ on:
 
 jobs:
   build:
+    docker:
+      - image: cimg/python:3.9.0
+      - image: cimg/postgres:14.1
+        environment:
+            POSTGRES_USER: postgres
 
     runs-on: ubuntu-latest
     strategy:
