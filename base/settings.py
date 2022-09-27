@@ -13,10 +13,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'try_to_guess')
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
-ALLOWED_HOSTS_ENV = os.getenv('ALLOWED_HOSTS')
-if ALLOWED_HOSTS_ENV:
-    ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
 
 INSTALLED_APPS = [
     "django.contrib.admin",
