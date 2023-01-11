@@ -1,8 +1,21 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    PermissionsMixin,
+    UserManager
+)
 from django.db import models
 
 
-User = get_user_model()
+class User(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(db_index=True, max_length=255, unique=True)
+    email = models.EmailField(db_index=True, unique=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
-class CustomUser(User):
-    age = models.PositiveIntegerField(null=True, blank=True)
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
+    objects = UserManager()
+
+    def __str__(self) -> str:
+        return self.username

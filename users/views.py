@@ -6,10 +6,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 
-from .serializers import RegisterSerializer, UserSerializer
+from .serializers import RegisterSerializer, UserSerializer, ChangePasswordSerializer
+from .permissions import AccountOwnerPermission
+from .models import User
 
 
-User = get_user_model()
+# User = get_user_model()
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -41,6 +43,14 @@ class LogoutView(generics.GenericAPIView):
         token.blacklist()
 
         return Response(status=status.HTTP_205_RESET_CONTENT)
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+    serializer_class = ChangePasswordSerializer
+    permission_classes = (IsAuthenticated, AccountOwnerPermission)
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 class UserViewSet(viewsets.ModelViewSet):

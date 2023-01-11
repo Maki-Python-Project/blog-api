@@ -7,18 +7,20 @@ services:
           dockerfile: Dockerfile.prod
         command: gunicorn base.wsgi:application --bind 0.0.0.0:8000
         volumes:
-            - static_volume:/home/app/web/staticfiles
+          - static_volume:/home/app/web/staticfiles
+        env_file:
+          - ./.env.dev
         expose:
-        - 8000
+          - 8000
         depends_on:
-        - db
+          - db
     db:
         container_name: "psql"
         image: postgres
         volumes:
             - postgres_database_volume:/var/lib/postgresql/data
         ports:
-        - "6666:5432"
+        - "5432:5432"
         environment:
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=admin
