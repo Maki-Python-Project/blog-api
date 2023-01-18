@@ -1,6 +1,7 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import viewsets
+from rest_framework import generics
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -8,6 +9,7 @@ from articles.serializers import ArticleSerializer, ArticleDetailSerializer
 from articles.models import Article
 from articles.permissions import AdminOrAccountOwnerPermission
 from articles.filters import ArticleFilter
+from likes.mixins import LikedMixin
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -16,7 +18,7 @@ class StandardResultsSetPagination(PageNumberPagination):
     max_page_size = 10
 
 
-class ArticleViewSet(viewsets.ModelViewSet):
+class ArticleViewSet(LikedMixin, viewsets.ModelViewSet):
     filterset_class = ArticleFilter
     pagination_class = StandardResultsSetPagination
 
@@ -54,3 +56,8 @@ class ArticleViewSet(viewsets.ModelViewSet):
             return ArticleSerializer
         elif self.action in ['retrieve', 'delete', 'update', 'partial_update']:
             return ArticleDetailSerializer
+
+
+class LikeViewSet(LikedMixin, viewsets.GenericViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleDetailSerializer

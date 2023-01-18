@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     # local
     "users",
     "articles",
+    "likes",
+    "comments",
 ]
 
 MIDDLEWARE = [
@@ -103,6 +105,8 @@ CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:1337/"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'users.User'
+
+HOST_URL = "http://127.0.0.1:80/"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [

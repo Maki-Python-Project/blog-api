@@ -1,6 +1,9 @@
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from django.contrib.contenttypes.fields import GenericRelation
+
+from likes.models import Like
 
 
 class DraftManager(models.Manager):
@@ -35,23 +38,11 @@ class Article(models.Model):
     draft = models.BooleanField(default=False)
     objects = models.Manager()
     draft_true = DraftManager()
+    likes = GenericRelation(Like)
 
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse('article_detail', args=[str(self.id)])
-
-
-class Comment(models.Model):
-    text = models.CharField(max_length=200)
-    customer = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    article = models.ForeignKey(
-        Article, on_delete=models.CASCADE, related_name='comments', null=True
-    )
-
-    def __str__(self) -> str:
-        return f'{self.text}; author: {self.customer}'
+    @property
+    def total_likes(self):
+        return self.likes.count()

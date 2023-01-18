@@ -18,13 +18,3 @@ def validate_password(validated_data: OrderedDict) -> OrderedDict:
         raise serializers.ValidationError({'password': msg})
 
     return validated_data
-
-
-def send(user_email: str, user_name: str) -> None:
-    send_mail(
-        'You have just registered on our website',
-        f'Welcome, {user_name}',
-        os.getenv('EMAIL_HOST'),
-        [user_email],
-        fail_silently=False
-    )

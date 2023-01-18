@@ -6,12 +6,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 
-from .serializers import RegisterSerializer, UserSerializer, ChangePasswordSerializer
-from .permissions import AccountOwnerPermission
-from .models import User
-
-
-# User = get_user_model()
+from users.serializers import RegisterSerializer, UserSerializer, ChangePasswordSerializer
+from users.permissions import AccountOwnerPermission
+from users.models import User
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -27,6 +24,7 @@ class RegisterApi(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+
         return Response({
             'user': UserSerializer(
                 user, context=self.get_serializer_context()
