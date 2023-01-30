@@ -9,14 +9,12 @@ from comments.permissions import AdminOrAccountOwnerPermission
 
 class CommentList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
-    queryset = Comment.objects.all().select_related('customer')
+    queryset = Comment.objects.all().select_related("customer")
     serializer_class = CommentSerializer
     filterset_class = CommentFilter
 
     def perform_create(self, serializer: CommentSerializer) -> None:
-        serializer.save(
-            customer=self.request.user
-        )
+        serializer.save(customer=self.request.user)
 
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
