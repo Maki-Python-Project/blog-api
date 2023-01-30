@@ -14,6 +14,7 @@ jobs:
       max-parallel: 4
       matrix:
 <<<<<<< HEAD
+<<<<<<< HEAD
         python-version: [3.9]
     
     services:
@@ -25,6 +26,9 @@ jobs:
           POSTGRES_DB: post
         ports: ['5432:5432']
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+=======
+        python-version: [3.7, 3.8, 3.9]
+>>>>>>> parent of 0cb0b91 (foo)
 =======
         python-version: [3.7, 3.8, 3.9]
 >>>>>>> parent of 0cb0b91 (foo)
