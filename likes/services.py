@@ -11,7 +11,6 @@ def add_like(obj, user):
     like, is_created = Like.objects.get_or_create(
         content_type=obj_type, object_id=obj.id, user=user
     )
-    print(like)
     return like
 
 
