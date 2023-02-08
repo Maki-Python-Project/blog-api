@@ -65,5 +65,6 @@ Users can register, but they need to specify:
 * Username
 * Email
 * Password(twice to confirm)
+
 The password must contain at least 8 characters and one letter. Authorized users can change their own password.
 Also created object level permissions using Django Guardian for admin site.
