@@ -3,6 +3,8 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
+from users.models import User
+
 
 @pytest.mark.django_db
 def test_info(api_client, superuser_token, user_data):
@@ -55,7 +57,8 @@ def test_change_password(api_client, user_data, user_token):
         },
         format="json",
     )
-
+    assert User.objects.filter(username="user"), "User cannot be found"
+    assert user_data["password"] != "P@ssw0rd4322", "Password has not been changed"
     assert response.status_code == status.HTTP_200_OK, "Problem with changing password"
 
 
