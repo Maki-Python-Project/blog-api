@@ -13,6 +13,9 @@ def test_create_article(api_client, user_token):
     response = api_client.post(url, {"title": "test article", "body": "test body"})
 
     assert response.status_code == status.HTTP_201_CREATED, "Cannot create article"
+    assert (
+        response.data["title"] == "test article"
+    ), "Can't find article with given data"
 
 
 @pytest.mark.django_db
@@ -23,7 +26,6 @@ def test_filter_article(api_client, article, user_token):
     assert Article.objects.filter(
         title=response.data["title"]
     ), "Can't find article with given data"
-
     assert (
         response.status_code == status.HTTP_200_OK
     ), "Cannot retrieve specific article"
