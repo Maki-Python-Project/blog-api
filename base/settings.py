@@ -1,4 +1,5 @@
 import os
+import environ
 
 from datetime import timedelta
 from pathlib import Path
@@ -6,9 +7,12 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "try_to_guess")
+env = environ.Env()
+environ.Env.read_env()
 
-DEBUG = int(os.environ.get("DEBUG", default=0))
+SECRET_KEY = env("SECRET_KEY")
+
+DEBUG = int(env("DEBUG"))
 
 ALLOWED_HOSTS = []
 
@@ -65,12 +69,8 @@ WSGI_APPLICATION = "base.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("ENGINE_DB", "django.db.backends.postgresql_psycopg2"),
-        "NAME": os.environ.get("NAME_DB", BASE_DIR / "db.sqlite3"),
-        "USER": os.environ.get("USER_BD", "user"),
-        "PASSWORD": os.environ.get("PASSWORD_BD", "password"),
-        "HOST": os.environ.get("HOST_DB", "localhost"),
-        "PORT": os.environ.get("PORT_DB", "5432"),
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
